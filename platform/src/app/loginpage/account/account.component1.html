@@ -1,0 +1,237 @@
+<head>
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
+</head>
+
+<body style="background-color:#2ABB9C;min-height:700px">
+  <div class="container">
+    <div class="row mx-auto text-center">
+      <div class="col-md-12">
+
+        <div class="row">
+          <div class="col-md-2">
+            <label class="text-primary">Email Address</label>
+          </div>
+          <div class="col-md-3">
+            <form name="form" (ngSubmit)="f.form.valid && onSaveChangedEmail()" #f="ngForm" novalidate>
+              <div class="row">
+                <input type="text" name="email" #email="ngModel" [(ngModel)]="model.email" placeholder="Email" style="width:100%" class="no-border placeholder-style form-control"
+                  [disabled]="hideEmail" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" required (change)="emailSaved=false">
+                <div *ngIf="f.submitted && email.hasError('pattern')" class="alert-danger body-text">Please enter a valid email id!</div>
+                <div *ngIf="f.submitted && email.hasError('required')" class="alert-danger body-text">Please enter an email id!</div>
+              </div>
+              <div class="row">
+                <button class="link-style" (click)="hideEmail = false">change email</button>
+              </div>
+              <div class="row">
+                <button class="btn" type="submit" [disabled]="(hideEmail === true) || (model.email ==='')">Save</button>
+              </div>
+              <div class="row">
+                <label [hidden]="emailSaved === false">{{emlMsg}}</label>
+              </div>
+            </form>
+          </div>
+          <div class="col-md-2">
+            <div *ngIf="emailVerified === 'true'">
+              <div #dotEmail class="exists-style"></div>
+              <label>Verified</label>
+            </div>
+            <div *ngIf="emailVerified === 'false'">
+              <div #dotEmail class="circle"></div>
+              <button class="link-style" (click)="onVerifyEmail()">Please verify</button>
+            </div>
+
+          </div>
+        </div>
+        <form name="form" (ngSubmit)="f1.form.valid && onSave()" #f1="ngForm" novalidate>
+          <div class="row">
+
+            <div class="col-md-2">
+              <label class="text-primary">Phone Number</label>
+            </div>
+            <div class="col-md-3">
+              <div class="row">
+                <input name="phone" #phone="ngModel" [(ngModel)]="model.phone" class="form-control" pattern='^(\+\d{1,2})?\(?\d{3}\)?\d{3}\d{4}$'
+                  placeholder="Phone number" title='Phone Number (Format: +99(99)9999-9999)' style="width:100%" [disabled]="enableSave === false"
+                  required>
+                <div *ngIf="f1.submitted && phone.hasError('pattern')" class="alert-danger body-text">Please enter a valid phone number!</div>
+                <div *ngIf="f1.submitted && phone.hasError('required')" class="alert-danger body-text">Please enter a phone number to save!</div>
+              </div>
+
+
+
+              <div class="row">
+                <button class="link-style" (click)="enableSave=true;phoneSaved=false">change phone</button>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div *ngIf="phoneVerified === 'true'">
+                <div #dotPhone class="exists-style"></div>
+                <label>Verified</label>
+              </div>
+              <div *ngIf="phoneVerified === 'false' && phoneSaved===true">
+                <div #dotPhone class="circle"></div>
+                <button type="button" class="link-style" (click)="onVerifyPhone()">Please verify</button>
+              </div>
+
+            </div>
+
+          </div>
+          <div class="row" style="padding-top:5px">
+            <div class="col-md-5">
+              <button class="btn" type="submit" [disabled]="(enableSave === false) && (model.phone!='')">Save</button>
+            </div>
+            <div class="col-md-5">
+              <label [hidden]="phoneSaved === false">Phone number has been added to your account!</label>
+            </div>
+
+          </div>
+        </form>
+      </div>
+      <div class="col-md-2">
+        <label class="text-primary">Password</label>
+      </div>
+      <div class="col-md-3">
+        <form name="form" (ngSubmit)="f2.form.valid && onSaveChangedPwd()" #f2="ngForm" novalidate>
+          <div class="row">
+            <div class="col-md-10">
+              <input [type]="pwdType" name="pwd" #pwd="ngModel" [(ngModel)]="model.pwd" placeholder="Password" style="width:100%" class="no-border placeholder-style form-control"
+                required minlength="8">
+            </div>
+            <div class="col-md-1">
+              <button type="button" (click)="pwdType='text'">
+                <i class="fa fa-eye-slash" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div *ngIf="f2.submitted && pwd.hasError('required')" class="alert-danger body-text">Please enter a password!</div>
+            <div *ngIf="f2.submitted && pwd.hasError('minlength')" class="alert-danger body-text">Your password must be atleast 8 characters!</div>
+          </div>
+          <div class="row">
+            <button class="link-style" (click)="hideRepeat = false">change password</button>
+          </div>
+          <div class="row">
+            <input [type]="pwdType" name="rptpwd" #rptpwd="ngModel" [(ngModel)]="model.rptpwd" placeholder="Repeat Password" style="width:100%"
+              class="no-border placeholder-style form-control" [hidden]="hideRepeat" required minlength="8">
+            <div *ngIf="f2.submitted && rptpwd.hasError('required')" class="alert-danger body-text">Please enter a password!</div>
+            <div *ngIf="f2.submitted && rptpwd.hasError('minlength')" class="alert-danger body-text">Your password must be atleast 8 characters!</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <button type="submit" [hidden]="hideRepeat">Save Changed Password</button>
+            </div>
+            <div class="col-md-4">
+              <button type="button" (click)="onCancel()" [hidden]="hideRepeat">Cancel</button>
+            </div>
+          </div>
+
+          <div class="row">
+            <label [hidden]="!showPwdMessage">{{pwdMessage}}</label>
+          </div>
+        </form>
+      </div>
+
+      <div class="col-md-8">
+        <input type="checkbox" (change)="onShowPlatformLogin($event.srcElement)">
+        <label>Show Platform Login History</label>
+        <div [hidden]="!showLoginDetails">
+          <div *ngIf="loginCount === 0">There are no login details yet! </div>
+          <div class="col-md-12">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>IP Address</th>
+                  <th>Session</th>
+                  <th>Permission</th>
+                  <th>Last Login</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of loginDetails| slice:0:5">
+                  <td>{{row.ip_address}}</td>
+                  <td>{{row.session_val}}</td>
+                  <td>{{row.permission}}</td>
+                  <td>{{row.last_login}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+
+
+
+      <!-- Modal for Email Verification -->
+      <button class="btn" #hiddenEmailBtn (click)="open(content,$event,{backdrop  : 'static',keyboard  : false})" hidden="true"></button>
+      <ng-template #content let-d="dismiss">
+        <div class="modal-header ">
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-8">
+              <h6>An OTP has been sent to
+                <h5>{{model.email}}</h5> Please enter it ... </h6>
+              <input type="text" (change)="onVerCodeChange($event)">
+              <button class="btn" (click)="onClickSubmit();d('Cross click');">
+                SUBMIT
+              </button>
+            </div>
+            <div class="col-md-8">
+              <h6>Please check your email id if you have not received the OTP.</h6>
+              <button class="link-style" (click)="onVerifyEmail()">Resend</button>
+            </div>
+          </div>
+          <div class="row">
+            <h5 style="color:green" [hidden]="emailVerified !== 'true'"> Your account has been verified successfully!!</h5>
+          </div>
+        </div>
+      </ng-template>
+
+      <!-- Modal for Phone Verification -->
+      <button class="btn" #hiddenBtn (click)="open(phonemodal,$event,{backdrop  : 'static',keyboard  : false})" hidden="true"></button>
+      <ng-template #phonemodal let-d="dismiss">
+        <div class="modal-header ">
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-8">
+              <h6>An OTP has been sent to
+                <h5>{{model.phone}}</h5> Please enter it ... </h6>
+              <input type="text" (change)="onVerCodeChange($event)">
+              <button class="btn" (click)="onSubmit();d('Cross click');">
+                SUBMIT
+              </button>
+            </div>
+            <div class="col-md-8">
+              <h6>Please check your phone# if you have not received the OTP.</h6>
+              <button class="link-style" (click)="onVerifyPhone()">Resend</button>
+            </div>
+          </div>
+          <div class="row">
+            <h5 style="color:green" [hidden]="phoneVerified !== 'true'"> Your account has been verified successfully!!</h5>
+          </div>
+        </div>
+      </ng-template>
+
+      <!-- Modal for Login -->
+      <ng-template #login let-d="dismiss">
+        <div class="modal-header ">
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <login></login>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
+</body>

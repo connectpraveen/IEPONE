@@ -1,0 +1,34 @@
+<div class="navbar top-header navbar-default">
+	<div class="container">
+<div class="col-lg-12 text-left logo"><a href="account.html"><img src="../assets/images/logo.jpg"/></a> <a href="login.html" class=" pull-right btn sign">Sign Out</a></div>
+	</div>
+  </div>
+  <header></header>
+<body style="background-color:#2ABB9C;min-height:700px">
+	<div class="container">
+		<div class="col-md-12">
+		
+            <table class="table table-bordered">
+                 				 <thead>
+      								<tr>
+        								<th>Device Id</th>
+        								<th>Type</th>
+        								<th>Status</th>
+        								<th>Last Sync</th>
+        								<th>Last Login</th>
+      								</tr>
+    							</thead>
+    							 <tbody>
+      								<tr *ngFor="let row of devices| orderBy: order : reverse | slice:0:10">
+        								<td>{{row.mac_id}}</td>
+        								<td>{{row.type}}</td>
+        								<td>{{row.status}}</td>
+        								<td>{{row.last_sync}}</td>
+        								<td>{{row.last_login}}</td>
+      								</tr>
+      							 </tbody>
+                 			</table>
+                 		</div>	
+                 		 <div *ngIf="deviceCount === 0">There are no devices yet! </div>
+	</div>
+</body>

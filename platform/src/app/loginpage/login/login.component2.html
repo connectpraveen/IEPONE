@@ -1,0 +1,79 @@
+<body style="background:#34679a;min-height:800px">
+<div class="container text-center">
+	<div class="row">
+		<div class="col-md-12">
+			<img src="../assets/images/loginpagelogo.png" style="height:200px;width:600px">
+		</div>
+	</div>	
+	<div class="row"><div class="col-md-6"></div>
+		<div class="col-md-6">
+			<div class="row">
+				<label style="color:white">Login using social media</label>
+			</div>
+			<div class="row">
+				<div class="col-md-1">
+					<input type="image" src="../assets/images/googlebtn.png" alt="Google Plus" width="50" height="50">
+					<input type="image" src="../assets/images/facebookbtn.png" alt="Facebook" width="50" height="50">
+					<input type="image" src="../assets/images/twitterbtn.png" alt="Twitter" width="50" height="50">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row"><div class="col-md-6"></div>
+		<div class="col-md-6">
+		
+			<div class="row">
+			<div class="col-md-1">
+				<input type="image" src="../assets/images/mailbtn.png" alt="Mail Login" width="50" height="50">
+				</div>
+				
+				<div class="border col-md-12" style="background:grey">
+				<form name="form" (ngSubmit)="f.form.valid && onRegister()" #f="ngForm" novalidate>
+					<div class="row">
+						<div class="col-md-2">
+							<label style="color:white">Email: </label>
+						</div>
+						<div class="col-md-6">
+							  	<input type="text" name="email" #email="ngModel" [(ngModel)]="model.email"  pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"  required
+							  	placeholder="Email"  class="no-border placeholder-style form-control">
+            					<div *ngIf="f.submitted && email.hasError('pattern')" class = "alert-danger body-text">Please enter a valid email id!</div>
+            					<div *ngIf="f.submitted && email.hasError('required')" class = "alert-danger body-text">Please enter an email id!</div>            					
+						</div>
+						<div class="col-md-2">
+							<button class="btn" type="submit" style="background:url('../assets/images/registerbtn.png');
+							display: inline-block;background-repeat: no-repeat;background-size: 120px 40px;height:40px;width:120px">
+							</button>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-2">
+							<label style="color:white">Password: </label>
+						</div>
+						<div class="col-md-6">
+							<input type="password" name="password" #password="ngModel" [(ngModel)]="model.password" required
+							  	placeholder="Password" style="width:100%" class="no-border placeholder-style form-control" minlength="8">            	
+            					<div *ngIf="f.submitted && password.hasError('required')" class = "alert-danger body-text">Please enter a password!</div>
+            					<div *ngIf="f.submitted && password.hasError('minlength')" class = "alert-danger body-text">Your password must be atleast 8 characters!</div>
+						</div>
+						<div class="col-md-2">
+							<button class="btn" type="button" (click)="onSignIn()" style="background:url('../assets/images/signin.png');
+							display: inline-block;background-repeat: no-repeat;background-size: 120px 40px;height:40px;width:120px">
+							</button>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							
+							
+							<label [hidden]="showMsg === true">{{message}}</label>
+						</div>
+					</div></form>
+				</div>
+				
+			</div>
+			
+		</div>
+	</div>
+	
+</div>
+</body>

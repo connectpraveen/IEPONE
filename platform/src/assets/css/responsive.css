@@ -1,0 +1,85 @@
+/* -- footer responsive-- */
+
+@media screen and (max-width: 1080px) {
+ .green-bt, .blue-bt, .red-bt, .pink-bt {
+		padding: 3px 7px;
+	font-size: 12px;
+}.btn.show {
+	font-size: 11px;
+}
+}
+@media screen and (max-width: 800px) {
+  .left-col h4 {
+	margin-bottom: 20px;
+}.plan {
+    margin-bottom: 20px;
+}.btn.show {
+	margin-bottom: 14px;
+}.or p {
+	margin-top: 0;
+} 
+}
+
+@media screen and (max-width: 768px) {
+  
+}
+
+
+@media screen and (max-width: 667px) {
+   
+}
+
+@media screen and (max-width: 600px) {
+   
+}
+
+
+@media screen and (max-width: 480px) {
+.btn.sign {
+	padding: 9px 9px;
+	font-size: 12px;
+	float: right;
+} .navbar-nav > li > a img {
+    display: none;
+}.navbar-nav > li > a {
+	width: 100%;
+}
+ .navbar-nav > li > a span {
+    display: block;
+}.top-menu .navbar-nav > li {
+		width: 100%;
+	text-align: center;
+	background: #efefef;
+	margin-bottom: 1px;
+}
+.nav.navbar-nav.navbar-right {
+    width: 100%;
+}.footer a {
+	text-align: center;
+	width: 100%;
+	float: left;
+}.agileinfo {
+    text-align: center;
+} .green-bt, .blue-bt, .red-bt, .pink-bt {
+
+	padding: 3px 9px;
+	font-size: 12px;
+} .verified, .notverified, .pss {
+    width: 100%;
+    text-align: center;
+    display: inline-block;
+}.notverified img, .verified img, .pss img {
+    width: 47%;
+    float: none;
+    margin-left:0;
+    margin-top: 10px;
+}.left-col h4 {
+	margin-bottom: 20px;
+}.plan {
+    margin-bottom: 20px;
+}.btn.show {
+	margin-bottom: 14px;
+}.or p {
+	margin-top: 0;
+}
+}

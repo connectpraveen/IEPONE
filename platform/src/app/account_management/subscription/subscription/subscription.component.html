@@ -1,0 +1,261 @@
+<div class="wrap">
+	<div class="navbar top-header navbar-default">
+		<div class="container">
+			<div class="col-lg-12 text-left logo">
+				<a href="account.html">
+					<img src="../assets/images/logo.jpg" />
+				</a>
+				<a routerLink="/login" class=" pull-right btn sign">Sign Out</a>
+			</div>
+		</div>
+	</div>
+	<header>
+	</header>
+	<section class="">
+		<div class="container login-box">
+			<div class="row">
+				<div class="col-md-2 left-col">
+					<h4 [hidden]="!acntSubscribed">Active Until 2020-March-10{{expiryDate}}</h4>&nbsp;
+				</div>
+				<div class="col-md-6">
+					<table class="table device table-striped table-bordered " width="100%">
+						<thead>
+							<tr class="main-h">
+								<td>
+									<h2>YOUR Subscription DETAILS</h2>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<div class="form-horizontal">
+										<div class="form-group">
+											<div class="col-sm-5 control-label">
+												<button class="green-bt btn btn-success btn-sm show" (click)="showSection2 ? showSection2 = false : showSection2 = true;">Show My Subscription Code</button>
+											</div>
+											<div class="col-sm-5 col-xs-9">
+												<input class="form-control" placeholder="Subscription Code" required="" type="text" value="{{ showSection2==true? subsCode:''}}">
+											</div>
+											<div class="col-sm-2">
+
+											</div>
+										</div>
+
+										<form name="form" (ngSubmit)="f.form.valid && onAddSubs()" #f="ngForm" novalidate>
+
+											<div class="form-group">
+												<div class="col-sm-5 control-label">
+													<a href="#" class="green-bt btn btn-success btn-sm show">Enter New Subscription Code</a>
+												</div>
+												<div class="col-sm-5">
+													<input type="text" name="code" #code="ngModel" [(ngModel)]="model.code" class="form-control" required>
+													<div *ngIf="f.submitted && !f.form.valid" class="alert-danger body-text">Please enter a subscription code!</div>
+
+												</div>
+												<div class="col-sm-2">
+													<button class="green-bt btn btn-success btn-sm" type="submit">ADD</button>
+
+												</div>
+												<label style="margin-left: 20px; margin-top: 20px;" [hidden]="!showMsg">{{msg}}</label>
+											</div>
+										</form>
+									</div>
+									<table class="table device table-striped table-bordered subs" width="100%">
+										<thead>
+											<tr class="main-h">
+												<td>
+													<h2>Buy Account</h2>
+												</td>
+											</tr>
+
+										</thead>
+										<tbody>
+											<tr>
+												<td class="inner">
+													<div class="row text-center">
+
+														<div class="col-sm-6 col-md-4" *ngFor="let service of Services| orderBy: order;let k=index">
+															<div class="plan">
+																<div class="plan-header">
+																	<h4>{{service.service_name}}</h4>
+																	<p>
+																		<sup>$</sup>
+																		<span>20</span> / month</p>
+																</div>
+																<div class="arrow"></div>
+																<div class="plan_btn">
+																	<input type="radio" value="{{service.service_id}}" name="service" (click)="onSelectService($event)" [checked]="k===0">
+																	<a href="#" class="blue-bt btn btn-default btn-sm pull-right">
+																		Subscribe</a>
+																</div>
+
+															</div>
+														</div>
+
+														<!-- End Col -->
+													</div>
+
+												</td>
+
+											</tr>
+
+										</tbody>
+									</table>
+
+									<form class="form-horizontal">
+
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-12 control-label big">
+												TOTAL
+												<input name="qty" #qty="ngModel" [(ngModel)]="model.qty" type="number" min="1" max="100" (change)="onChangeQuantity()">ACCOUNTS
+											</label>
+										</div>
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-4 control-label sml">Enter Discount Code</label>
+											<div class="col-sm-6  col-xs-9">
+												<input type="text" class="form-control" name="discount" #discount="ngModel" [(ngModel)]="model.discount" (change)="onChangeCode()">
+											</div>
+											<div class="col-sm-2">
+												<button (click)="onApplyDiscount()" class="blue-bt btn btn-default btn-sm pull-right">
+													APPLY</button>
+											</div>
+
+											<div class="row" [hidden]="!applyDiscount">
+												<div class="col-md-12">
+													<label style="margin-left: 10px;" [hidden]="!expiredDiscount">This discount has expired!</label>
+													<label style="margin-left: 10px;">Discount applied : ${{discountAmnt}}</label>
+
+												</div>
+											</div>
+										</div>
+
+
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-12 control-label big">
+												TOTAL COST:
+												<span class="cost">{{cost}}$</span>
+											</label>
+										</div>
+										<div class="form-group last">
+											<div class="col-sm-7">
+												<button type="submit" class="green-bt btn btn-success btn-sm" data-toggle="modal" data-target="#product_view">
+													Make Payment</button>&nbsp;&nbsp;
+												<button type="reset" (click)="onCancel()" class="red-bt btn btn-default btn-sm">
+													Cancel</button>
+
+											</div>
+										</div>
+										<div class="modal fade product_view" id="product_view">
+											<div class="modal-dialog pay">
+												<div class="modal-content">
+
+													TOTAL COST:
+													<span class="cost">{{cost}}$</span>
+
+													<div>
+														<input type="radio" name="color" value="#0000ff" id="blue" />
+														<label for="blue" class="blue">
+															<img src="../assets/images/paypal.png">
+														</label>
+
+													</div>
+
+													<div>
+														<input type="radio" name="color" value="#00ffff" id="cyan" />
+														<label for="cyan" class="cyan">
+															<img src="../assets/images/gwallet.png">
+														</label>
+
+													</div>
+													<button type="submit" class="green-bt btn btn-success btn-sm" data-toggle="modal" data-target="#product_view">
+															Do Payment</button>&nbsp;&nbsp;
+												</div>
+											</div>
+										</div>
+
+
+									</form>
+
+								</td>
+
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+				<ng-template #code let-d="dismiss">
+					<div class="modal-header ">
+						<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<label>Your Subscription code is {{subsCode}}</label>
+					</div>
+				</ng-template>
+
+				<div class="col-md-4 right-col">
+					<button class="green-bt btn btn-success btn-sm" (click)="showSection1 ? showSection1 = false : showSection1 = true;">Show all my Subscriptions</button>
+					<table class="table device table-striped table-bordered " width="100%" *ngIf="showSection1">
+						<thead>
+							<tr class="main-h">
+								<td>
+									<h5>My Subscription</h5>
+								</td>
+							</tr>
+
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+
+									<table class="table table-bordered status">
+
+										<tbody>
+
+											<tr>
+												<th>S.No</th>
+												<th>Subscription Code </th>
+												<th>Subscription Date</th>
+												<th>Expiry Date</th>
+												<th>Active</th>
+											</tr>
+											<tr *ngFor="let row of subsDetails;let k =index">
+												<td>{{k+1}}</td>
+												<td>{{row.subscription_code}}</td>
+												<td>{{row.subscription_datetime}}</td>
+												<td>{{row.expiry_datetime}}</td>
+												<td>{{row.active}}</td>
+
+											</tr>
+										</tbody>
+									</table>
+
+								</td>
+
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+		</div>
+	</section>
+</div>
+<div class="footer">
+	<div class="container">
+		<div class="col-md-6  text-left">
+			<p class="agileinfo"> &copy; Copyright IEP | ONE INC 2010</p>
+		</div>
+
+		<div class="col-md-6 text-right">
+			<a href="#">contact@iepone.com</a>
+		</div>
+	</div>
+</div>
+<!--  player js -->

@@ -1,0 +1,89 @@
+<head >
+	<link rel="stylesheet" type="text/css" href="https://unpkg.com/file-upload-with-preview/dist/file-upload-with-preview.min.css">
+</head>
+<body>
+<div class="container">
+<div class="row">
+	<header></header>
+</div>
+<div class="row">
+	<div *ngFor ="let question of questions;let k=index" >
+		<div class="row" *ngIf="k === currentQuestion">
+			<div class="col-md-1">
+				<button (click)="onNext()">Next</button>
+			</div>
+			<div class="col-md-8">
+				<div class="row">
+					<div class="col-md-12">
+						<h6>{{question.question}}</h6>	
+					</div>
+				</div>
+				<div class="row">
+					<div [ngSwitch]="question.question_type">
+						<div *ngSwitchCase="'radio'">
+							<div *ngFor="let option of question.options">
+								<input type="radio" value="{{option}}" (change)="onSelectRadio($event)"><h6>{{option}}</h6>
+							</div>	
+						</div>
+						<div *ngSwitchCase="'input'">
+							<input type="text" [(ngModel)]="model.text" name="text" (change)="onEnterText($event)">
+						</div>
+						<div *ngSwitchCase="'checkbox'">
+							<div *ngFor="let option of question.options">
+								<input type="checkbox" (change)="onChecked($event)" value="{{option}}"><h6>{{option}}</h6> 
+							</div>
+						</div>
+						<div *ngSwitchCase="'dropdown'">
+							<select (change)="onSelect($event)">
+								<option *ngFor="let option of question.options" value="{{option}}" >{{option}}</option>
+							</select>
+						</div>
+						<div *ngSwitchCase="'number'">
+							<input type="number"  [(ngModel)]="model.number" name="number" (change)="onEnterNumber($event)">
+						</div>					
+					</div>
+				</div>
+				<div class="row">
+					<input type="checkbox" (change)="picChecked = !picChecked" #pic><h6>Add picture</h6>
+					<div [hidden]="!picChecked" >
+						 <image-upload [max]="1" [buttonCaption]="'Browse'" (uploadFinished)="onUploadFinished($event)"></image-upload> 
+						<!-- <ng4-files-click (filesSelect)="filesSelect($event)" [configId]="'my-image-config'">
+  						<span>Upload</span>
+						</ng4-files-click>  -->
+					</div>
+				</div>
+				<div class="row">
+					<input type="checkbox" #comment (change)="comChecked = !comChecked"><h6>Add comments</h6>
+					<div [hidden]="!comChecked"  >
+						<input type="text" [(ngModel)]="model.comment" name="comment">
+					</div>
+				</div>				
+				<div class="row">
+					<input type="checkbox" #video (change)="videoChecked = !videoChecked"><h6>Add video</h6>
+					<div [hidden]="!videoChecked" >
+						  <ng4-files-click (filesSelect)="filesSelect($event)">
+  							<span>Click me to upload</span>
+						</ng4-files-click>   
+						 <ng4-files-drop (filesSelect)="filesSelect($event)" [configId]="'my-video-config'">
+  						<div style="display: inline-block; height: 100px; width: 100px; background-color: gray">
+   						 {{selectedFiles}}
+  						</div>
+						</ng4-files-drop> 
+					</div>
+				</div>
+				<div class="row">
+						<button (click)="onSave(question)">Save</button>
+						<button >Close</button>
+				</div>
+				<div class="row">
+					<label [hidden]="!showMsg">Your answer has been saved!!</label>
+				</div>
+			</div>
+			<div class="col-md-1">
+				<button (click)="onPrev()">Prev</button>
+			</div>		
+		</div>	
+	</div>
+</div>
+</div>
+</body>

@@ -1,0 +1,15 @@
+<body>
+	<div class="row" >
+		<div class="col-md-2" *ngFor="let image of Images">
+			<button id={{image.image_id}} (click)="onClick($event,image.image_url)" >
+			<img style="height:200px;width:200px" src="../assets/images/{{image.image_url}}"></button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<button (click)="onSave()">Send to Mongo for classification</button>
+			<!-- <button (click)="onCancel()">Cancel</button> -->
+			<label [hidden]="showMsg">Images sent for classification</label>
+		</div>
+	</div>
+</body>

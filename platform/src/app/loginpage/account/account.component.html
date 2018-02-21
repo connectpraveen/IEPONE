@@ -1,0 +1,278 @@
+<div class="navbar top-header navbar-default">
+    <div class="container">
+        <div class="col-lg-12 text-left logo">
+            <a href="account.html">
+                <img src="../assets/images/logo.jpg" />
+            </a>
+            <a routerLink="/login" class=" pull-right btn sign">Sign Out</a>
+        </div>
+    </div>
+</div>
+<header>
+</header>
+<div class="container login-box">
+    <div class="row">
+        <div class="col-md-7 center">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form name="form" (ngSubmit)="f.form.valid && onSaveChangedEmail()" #f="ngForm" novalidate>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label" style="text-align: left;">
+                                Email</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="email" #email="ngModel" [(ngModel)]="model.email" placeholder="Email" class="form-control" [disabled]="hideEmail"
+                                    pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" required (change)="emailSaved=false">
+                                <div *ngIf="f.submitted && email.hasError('pattern')" class="alert-danger body-text">Please enter a valid email id!</div>
+                                <div *ngIf="f.submitted && email.hasError('required')" class="alert-danger body-text">Please enter an email id!</div>
+                            </div>
+                            <div class="col-sm-2" *ngIf="emailVerified === 'true'">
+
+                                <img style="max-height:10px;max-width:90px;" src="../assets/images/verified.png" />
+
+                            </div>
+                            <div *ngIf="emailVerified === 'false'">
+                                <div class="col-sm-2">
+
+                                    <img style="max-height:20px;max-width:60px;" src="../assets/images/not-verified.png" />
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group last">
+                            <div class="col-sm-offset-2 col-sm-8" style="padding-top: 5px;">
+                                <button (click)="hideEmail = false" class="green-bt btn btn-success btn-sm">
+                                    Change Email</button>
+                                <button type="submit" [disabled]="(hideEmail === true) || (model.email ==='')" class="blue-bt btn btn-default btn-sm ">
+                                    Save</button>
+
+                                <button type="submit" *ngIf="emailVerified === 'false'" class="blue-bt btn btn-default btn-sm" style="background-color:orange;"
+                                    data-toggle="modal" data-target="#content">Verify</button>
+                                <br>
+                                <label style="text-transform: capitalize;" [hidden]="emailSaved === false">{{emlMsg}}</label>
+                                <br>
+                            </div>
+
+                        </div>
+                    </form>
+
+                    <form name="form" (ngSubmit)="f1.form.valid && onSave()" #f1="ngForm" novalidate>
+                        <div class="form-group">
+                            <label for="phone" class="col-sm-2 control-label" style="text-align: left;">
+                                Phone</label>
+                            <div class="col-sm-8">
+                                <input name="phone" #phone="ngModel" [(ngModel)]="model.phone" class="form-control" pattern='^(\+\d{1,2})?\(?\d{3}\)?\d{3}\d{4}$'
+                                    placeholder="Phone number" title='Phone Number (Format: +99(99)9999-9999)' [disabled]="enableSave === false"
+                                    required>
+                                <div *ngIf="f1.submitted && phone.hasError('pattern')" class="alert-danger body-text">Please enter a valid phone number!</div>
+                                <div *ngIf="f1.submitted && phone.hasError('required')" class="alert-danger body-text">Please enter a phone number to save!</div>
+                            </div>
+                            <div *ngIf="phoneVerified === 'false'">
+                                <div class="col-sm-2">
+
+                                    <img style="max-height:10px;max-width:90px;" src="../assets/images/not-verified.png" />
+
+
+                                </div>
+                            </div>
+                            <div class="col-sm-2" *ngIf="phoneVerified === 'true'">
+
+                                <img  style="max-height:20px;max-width:60px;" src="../assets/images/verified.png" />
+
+                            </div>
+                        </div>
+                        <div class="form-group last">
+                            <div class="col-sm-offset-2 col-sm-8" style="padding-top: 5px;">
+                                <button (click)="enableSave=true;phoneSaved=false" class="green-bt btn btn-success btn-sm">
+                                    Change Phone</button>
+                                <button type="submit" [disabled]="(enableSave === false) && (model.phone!='')" class="blue-bt btn btn-default btn-sm">
+                                    Save</button>
+                                <button type="submit" *ngIf="phoneVerified === 'false'" class="blue-bt btn btn-default btn-sm" style="background-color:orange;" data-toggle="modal" data-target="#content_phone">Verify</button>
+                                <br>
+                                <label style="text-transform: capitalize;" [hidden]="phoneSaved === false">Phone number has been added to your account!</label>
+                                <br>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-7 center">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form name="form" (ngSubmit)="f2.form.valid && onSaveChangedPwd()" #f2="ngForm" novalidate>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label" style="text-align: left;">
+                                Password</label>
+                            <div class="col-sm-8">
+                                <input [type]="pwdType" name="pwd" #pwd="ngModel" [(ngModel)]="model.pwd" placeholder="Password" class="form-control" required
+                                    minlength="8">
+                                <div *ngIf="f2.submitted && pwd.hasError('required')" class="alert-danger body-text">Please enter a password!</div>
+                                <div *ngIf="f2.submitted && pwd.hasError('minlength')" class="alert-danger body-text">Your password must be atleast 8 characters!</div>
+                            </div>
+                            <div class="col-sm-2">
+
+                                <a (click)="pwdType=pwdType=='Text'?'Password':'Text'" style="cursor: pointer;" class="pss">
+                                    <img style="max-height:30px;max-width:50px;" src="../assets/images/view.png" />
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-group last" style="padding-top: 5px; padding-bottom: 20px;">
+                            <div class="col-sm-offset-2 col-sm-8">
+                                <button (click)="hideRepeat = false" class="green-bt btn btn-success btn-sm">
+                                    Change Password</button>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <br>
+                            <br>
+                        </div>
+                        <div class="form-group" [hidden]="hideRepeat">
+                            <label for="inputPassword3" class="col-sm-2 control-label" style="text-align: left;">
+                                Repeat</label>
+                            <div class="col-sm-8">
+                                <input [type]="pwdType" name="rptpwd" #rptpwd="ngModel" [(ngModel)]="model.rptpwd" placeholder="Repeat Password" class="form-control"
+                                    required minlength="8">
+                                <div *ngIf="f2.submitted && rptpwd.hasError('required')" class="alert-danger body-text">Please enter a password!</div>
+                                <div *ngIf="f2.submitted && rptpwd.hasError('minlength')" class="alert-danger body-text">Your password must be atleast 8 characters!</div>
+                            </div>
+                        </div>
+                        <div class="form-group last" [hidden]="hideRepeat">
+                            <div class="col-sm-offset-2 col-sm-8" style="padding-top: 5px;">
+                                <button type="submit" class="blue-bt btn btn-success btn-sm">
+                                    Save Changed Password</button>
+                                <button type="button" (click)="onCancel()" class="red-bt btn btn-default btn-sm ">
+                                    Cancel</button>
+                            </div>
+
+                            <label style="margin-left: 20%; margin-top: 10px;" [hidden]="!showPwdMessage">{{pwdMessage}}</label>
+                        </div>
+
+                    </form>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" (change)="onShowPlatformLogin($event.srcElement)" /> Show Platform Login History
+                                </label>
+                            </div>
+                        </div>
+
+                        <div [hidden]="!showLoginDetails">
+
+                            <div class="col-md-12">
+                                <div *ngIf="loginCount === 0">There are no login details yet! </div>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center;">IP Address</th>
+                                            <th style="text-align: center;">Session</th>
+                                            <th style="text-align: center;">Permission</th>
+                                            <th style="text-align: center;">Last Login</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let row of loginDetails| orderBy: order : reverse |slice:0:5">
+                                            <td style="text-align: center;">{{row.ip_address}}</td>
+                                            <td style="text-align: center;">{{row.session_val}}</td>
+                                            <td style="text-align: center;">{{row.permission}}</td>
+                                            <td style="text-align: center;">{{row.last_login}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal for Email Verification -->
+    <!-- <button class="btn" #hiddenEmailBtn (click)="open(content,$event,{backdrop  : 'static',keyboard  : false})" hidden="true"></button> -->
+    <div class="modal fade product_view" id="content">
+        <div class="modal-dialog pay">
+            <div class="modal-content pop">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <h6>An OTP has been sent to
+                                 {{model.email}}  Please enter it ... </h6>
+                                 <div class="txtbox col-md-12">
+                                        <input class="form-control col-md-8" type="text" (change)="onVerCodeChange($event)">
+                            <button class="blue-bt btn btn-success btn-sm" (click)="onClickSubmit();d('Cross click');">
+                                SUBMIT
+                            </button>
+                        </div>
+                        </div>
+                        <div class="col-md-12">
+                            <h6>Please check your email id if you have not received the OTP.</h6>
+                            <button class="red-bt btn btn-success btn-sm link-style" (click)="onVerifyEmail()">Resend</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h5 style="color:green" [hidden]="emailVerified !== 'true'"> Your account has been verified successfully!!</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal for Phone Verification -->
+    <!-- <button class="btn" #hiddenBtn (click)="open(phonemodal,$event,{backdrop  : 'static',keyboard  : false})" hidden="true"></button> -->
+
+    <div class="modal fade product_view" id="content_phone">
+        <div class="modal-dialog pay">
+            <div class="modal-content pop">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h6>An OTP has been sent to
+                                 {{model.phone}} Please enter it ... </h6>
+                                 <div class="txtbox col-md-12">
+                            <input class="form-control col-md-8" type="text" (change)="onVerCodeChange($event)">
+                            <button class="blue-bt btn btn-success btn-sm" (click)="onSubmit();d('Cross click');">
+                                SUBMIT
+                            </button>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <h6>Please check your phone# if you have not received the OTP.</h6>
+                            <button class="link-style red-bt btn btn-success btn-sm" (click)="onVerifyPhone()">Resend</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h5 style="color:green" [hidden]="phoneVerified !== 'true'"> Your account has been verified successfully!!</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal for Login -->
+    <ng-template #login let-d="dismiss">
+        <div class="modal-header ">
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <login></login>
+        </div>
+    </ng-template>
+    <div class="clearfix"></div>
+</div>
+<div class="footer">
+    <div class="container">
+        <div class="col-md-6  text-left">
+            <p class="agileinfo"> &copy; Copyright IEP | ONE INC 2010</p>
+        </div>
+
+        <div class="col-md-6 text-right">
+            <a href="#">contact@iepone.com</a>
+        </div>
+    </div>
+</div>
+<!--  player js -->

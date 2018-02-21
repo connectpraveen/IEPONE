@@ -1,0 +1,93 @@
+<div class="navbar top-header navbar-default">
+	<div class="container">
+<div class="col-lg-12 text-left logo"><a href="account.html"><img src="../assets/images/logo.jpg"/></a> <a href="login.html" class=" pull-right btn sign">Sign Out</a></div>
+	</div>
+  </div>
+  <header></header>
+<body style="background-color:#2ABB9C;min-height:700px">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<button class="link-style" (click)="showProfile=true">Create Profile</button>
+			</div>
+		</div>
+		<div *ngIf="(showProfile===true) && (profileCount === 5)">
+			<label> You can create maximum of 5 profiles!</label>
+		</div>
+		<div *ngIf="(showProfile===true) && (profileCount<5)">
+		<div class="row" >
+			<div class="col-md-1">
+				<label>Age :</label>	
+			</div>
+			<div class="col-md-3">
+				<select (change)="onAgeSelect($event)">
+					<option value="0">Less than 1 year old</option>
+					<option value="1">1 year old</option>
+					<option value="2">2 years old</option>
+					<option value="3">3 years old</option>
+				</select>			
+			</div>
+			<div class="col-md-1">
+				<label>Gender :</label>	
+			</div>
+			<div class="col-md-1">
+				<input type="radio" class="radio" name="gender" value="boy"  checked="checked" (change)="onSelectGender($event)"><h6>Boy</h6>
+			</div>
+			<div class="col-md-1">	
+				<input type="radio" class="radio" name="gender" value="girl" (change)="onSelectGender($event)"><h6>Girl</h6>		
+			</div>
+		</div>
+		<div class="row">	
+			<div class="col-md-2">  
+ 				<select  (change)="onAvatarSelect($event)">
+ 					<option *ngFor="let avatar of Avatars| orderBy: order;" value="{{avatar.avatar_url}}">
+ 					{{avatar.avatar_name}}</option>
+ 				</select>
+ 			</div>
+ 			<div class="col-md-4">	
+ 				<img src='../assets/images/{{avatarUrl}}' style="width:100px;height:100px">
+ 	
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<button (click)="onCreateProfile()">Create</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label [hidden]="!showSuccess">Your Profile has been created successfully!!</label>
+			</div>
+		</div>
+		</div>
+		</div>
+		<div *ngFor="let profile of Profiles">
+			<div class="row border">
+			<div class="col-md-2">
+				<div  *ngFor="let avatar of Avatars">
+					<div *ngIf="profile.avatar_id === avatar.avatar_id"> 
+						<img src='../assets/images/{{avatar.avatar_url}}' style="width:100px;height:100px">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5">
+					<div class="row">
+						<div class="col-md-12">
+							<label>Last Sync : {{profile.last_synced}}</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<label>Last Used : {{profile.last_used}}</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<label>Last Updated : {{profile.last_updated}}</label>
+						</div>
+					</div>
+				</div>
+			</div>
+					
+		</div>
+	</div>
+</body>

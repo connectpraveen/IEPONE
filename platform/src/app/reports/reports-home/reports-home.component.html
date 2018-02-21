@@ -1,0 +1,45 @@
+<body>
+	<div class="container">
+	<div class="row">
+		<header></header>
+	</div>
+	<div class="row">
+		<div class="col-md-2" *ngFor="let prof of Profiles">
+			<button (click)="onProfileClick($event)" value={{prof.profile_id}}>Profile : {{prof.profile_id}}</button>
+		</div>
+	</div>
+	<div *ngIf="showProfile===true">
+		<div class="row" style="min-height:400px;padding-top:50px">
+			<div class="col-md-4" *ngFor="let skill of Skills">
+				<div *ngFor ="let rep of reports">
+					<div *ngIf="(rep.skill_id === skill.skill_id) && (rep.day === value.toString())">
+						<label [ngStyle]="{'font-size':rep.strength+'px','font-family':rep.font_family,'font-weight':rep.interest+'px','color':rep.color,'filter': 'blur('+rep.confidence+'px)'}">{{skill.skill_name}}</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row"  style="width:800px; margin:0 auto;">
+			<div class="col-md-10">
+			<mat-slider
+			class="example-margin"
+			[disabled]="disabled"
+        		[invert]="invert"
+        		[max]="max"
+       			[min]="min"
+        		[step]="step"
+        		[thumb-label]="true"
+        		[tick-interval]="tickInterval"
+        		[(ngModel)]="value"
+        		[vertical]="vertical"
+			></mat-slider>
+    			<br>
+    			<label>Day : {{value}}</label>
+    		</div>
+    		<div class="col-md-1">
+    			<button (click)="value = value + 1">+</button>
+    			<button (click)="value = value - 1"> - </button>
+    		</div>
+		</div>
+	</div>
+	</div>
+</body>

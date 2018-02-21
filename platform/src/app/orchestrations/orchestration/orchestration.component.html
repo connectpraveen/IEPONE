@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+ </head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<header></header>
+			</div>
+		</div>
+		<div class="row" style="padding-top:20px">
+			<div class="col-md-12">
+				<label>MESSAGES</label>
+			</div>
+		</div>
+		<div class="row" style="padding-top:10px" *ngFor="let message of messages">
+			<div class="col-md-10">
+				<button (click)="onSelectMessage()" style="width:50%">{{message.message}}</button>
+			</div>
+		</div>
+		<div class="row" style="padding-top:20px">
+			<div class="col-md-12">
+				<label>ACTIONS</label>
+			</div>
+		</div>
+		<div class="row" style="padding-top:10px" *ngFor="let message of messages">
+			<div class="col-md-10">
+				<button style="width:50%">{{message.message}}</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-5" style="text-align:right">
+			 <button class="btn" [routerLink]="['/message']"> <i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i> </button>
+				<!-- <a [routerLink]="['/goal']"><i class="fa fa-plus-circle" aria-hidden="true"></i></a> -->
+			</div>
+		</div>
+	</div>
+</body>

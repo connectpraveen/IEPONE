@@ -1,0 +1,152 @@
+<body style="background-color:#2ABB9C;min-height:700px">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div [hidden]="!acntSubscribed">
+                    <div class="row">
+                        <div class="col-md-1">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="col-md-10">
+                            <label>Active until {{expiryDate}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button class="button" (click)=open(code,$event)>Show my Active Subscription Code</button>
+                        </div>
+                        <div class="col-md-6">
+                            <button class="button" (click)=open(allSubs,$event)>Show all my Subscriptions</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <form name="form" (ngSubmit)="f.form.valid && onAddSubs()" #f="ngForm" novalidate>
+                        <label>Enter New Subscription Code</label>
+                        <input type="text" name="code" #code="ngModel" [(ngModel)]="model.code" class="form-control" required>
+                        <div *ngIf="f.submitted && !f.form.valid" class="alert-danger body-text">Please enter a subscription code!</div>
+                        <button class="button" type="submit">ADD</button>
+                        <label [hidden]="!showMsg">{{msg}}</label>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label>Buy Subscription</label>
+            </div>
+            <div class="col-md-8">
+                <label>Total </label>
+                <input name="qty" #qty="ngModel" [(ngModel)]="model.qty" type="number" min="1" max="100" (change)="onChangeQuantity()">
+                <label> Accounts</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="row" *ngFor="let service of Services| orderBy: order;let k=index">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-lg-1">
+                                <input type="radio" value="{{service.service_id}}" name="service" (click)="onSelectService($event)" [checked]="k===0"> </div>
+                            <div class="col-lg-5">
+                                <label class="text-primary">{{service.service_name}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label>Enter Discount Code </label>
+                <input type="text" name="discount" #discount="ngModel" [(ngModel)]="model.discount" (change)="onChangeCode()">
+                <button class="button" (click)="onApplyDiscount()">Apply</button>
+                <label [hidden]="!expiredDiscount">This discount has expired!</label>
+            </div>
+        </div>
+        <div class="row" [hidden]="!applyDiscount">
+            <div class="col-md-12">
+                <label>Discount applied : ${{discountAmnt}}</label>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label>Total Cost :</label>
+                <label>{{cost}}$</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <button class="button btn" (click)="open(content,$event)">Make Payment</button>
+            </div>
+            <div class="col-md-6">
+                <button class="button" (click)="onCancel()">Cancel</button>
+            </div>
+        </div>
+        <div class="row" [hidden]="!showSuccess">
+            <label> Your order has been placed successfully!!</label>
+        </div>
+    </div>
+    <ng-template #code let-d="dismiss">
+        <div class="modal-header ">
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <label>Your Subscription code is {{subsCode}}</label>
+        </div>
+    </ng-template>
+    <ng-template #allSubs let-d="dismiss">
+        <div class="modal-header ">
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Subscription Code</th>
+                            <th>Subscribed Date</th>
+                            <th>Expiry Date</th>
+                            <th>Active</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let row of subsDetails;let k =index">
+                            <td>{{k+1}}</td>
+                            <td>{{row.subscription_code}}</td>
+                            <td>{{row.subscription_datetime}}</td>
+                            <td>{{row.expiry_datetime}}</td>
+                            <td>{{row.active}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template #content let-d="dismiss">
+        <div class="modal-header ">
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="col-lg-12">
+                <div class="row" *ngFor="let payment of Payments" style="padding-bottom:10px">
+                    <div class="col-lg-6">
+                        <img src="../assets/images/{{payment.logo}}" style="height:30px;width:100px"> </div>
+                    <div class="col-lg-2">
+                        <input type="radio" value={{payment.payment_id}} name="payment" (change)="onSelectPayment($event)"> </div>
+                </div>
+            </div>
+
+            <button (click)="onPayment();d('Cross click');"> Do Payment</button>
+        </div>
+
+    </ng-template>
+</body>

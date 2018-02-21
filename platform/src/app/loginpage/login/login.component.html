@@ -1,0 +1,114 @@
+<div class="wrap">
+    <div class="navbar top-header navbar-default">
+        <div class="container">
+            <div class="col-lg-12 text-center logo">
+
+                <img src="../assets/images/logo.jpg" />
+
+            </div>
+        </div>
+    </div>
+    <div class="container login-box">
+        <div class="row">
+            <div class="col-md-10 center iep">
+                <img src="../assets/images/iep.png" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10 center">
+                <div class="col-md-4">
+                    <h3>Login With</h3>
+                    <a href="#">
+                        <img style="max-height:103px;max-width:313px;" src="../assets/images/fb.png" />
+                    </a>
+                    <br/>
+                    <a href="#">
+                        <img style="max-height:103px;max-width:313px;" src="../assets/images/gplus.png" />
+                    </a>
+                    <br/>
+                    <a href="#">
+                        <img style="max-height:103px;max-width:313px;" src="../assets/images/tw.png" />
+                    </a>
+                    <p style="font-size: 14px;" class="wht">we will never post anything
+                        <br>It's Used only for authentication</p>
+                </div>
+                <div class="col-md-1 or">
+                    <p>or</p>
+                </div>
+                <div class="col-md-7 m-top">
+                    <h3>Email & Password</h3>
+
+                    <form class="form-horizontal login-form" (ngSubmit)="f.form.valid && onRegister()" #f="ngForm" novalidate>
+                        <div class="form-group">
+                            <div class="col-sm-8">
+                                <input type="text" name="email" #email="ngModel" [(ngModel)]="model.email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+                                    required placeholder="Email" class="no-border placeholder-style form-control">
+                                <div style="text-transform: capitalize;" *ngIf="f.submitted && email.hasError('pattern')" class="alert-danger body-text">Please enter a valid email id!</div>
+                                <div style="text-transform: capitalize;" *ngIf="f.submitted && email.hasError('required')" class="alert-danger body-text">Please enter an email id!</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-8">
+                                <input type="password" name="password" #password="ngModel" [(ngModel)]="model.password" required placeholder="Password" style="width:100%"
+                                    class="no-border placeholder-style form-control" minlength="8">
+                                <div style="text-transform: capitalize;" *ngIf="f.submitted && password.hasError('required')" class="alert-danger body-text">Please enter a password!</div>
+                                <div style="text-transform: capitalize;" *ngIf="f.submitted && password.hasError('minlength')" class="alert-danger body-text">Your password must be atleast 8 characters!
+                                </div>
+                            </div>
+                            <div class="form-group last">
+                                <div class="col-sm-10">
+                                    <button (click)="onSignIn()" type="button" style="margin-top: 10px; margin-left: 12px;" class="green-bt btn btn-success btn-sm">
+                                        Sign-in</button>
+                                    <button type="submit" style="margin-top: 10px; margin-left: 12px;" class="green-bt btn btn-success btn-sm">
+                                        Register</button>
+                                    <button type="reset" style="margin-top: 10px; margin-left: 12px;" class="pink-bt btn btn-default btn-sm">
+                                        Cancel</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-10" style="margin-left: 15px;" >
+                                    <label style="text-transform: capitalize;" [hidden]="showMsg === true">{{message}}</label>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-xs-4">
+                                    <div class="checkbox">
+                                        <label style="margin-left: 12px;">
+                                            <input type="checkbox" /> Remember me
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-xs-6  frgt">
+                                    <a href="#">Forgot Your Passowrd?</a>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <p class="blk" style="margin-left: 15px;"> Have No Email Account Click Here Create New Gmail Account</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+
+
+
+                </div>
+            </div>
+        </div>
+        <!-- </section> -->
+        <div class="clearfix"></div>
+    </div>
+    <div class="footer">
+        <div class="container">
+            <div class="col-md-6  text-left">
+                <p class="agileinfo"> &copy; Copyright IEP | ONE INC 2010</p>
+            </div>
+
+            <div class="col-md-6 text-right">
+                <a href="#">contact@iepone.com</a>
+            </div>
+        </div>
+    </div>
+</div>
